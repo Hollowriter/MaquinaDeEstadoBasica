@@ -13,7 +13,8 @@ public class WorkerMaquinita : MonoBehaviour {
         Idle,
         ToMine,
         Mining,
-        ToDeposit
+        ToDeposit,
+        LastTrip
     };
 
     enum Events
@@ -34,10 +35,26 @@ public class WorkerMaquinita : MonoBehaviour {
         maq.SetRelation((int)States.Mining, (int)Events.Full, (int)States.ToDeposit);
         maq.SetRelation((int)States.ToMine, (int)Events.Full, (int)States.ToDeposit);
         maq.SetRelation((int)States.ToDeposit, (int)Events.Deposit, (int)States.ToMine);
+        maq.SetRelation((int)States.ToMine, (int)Events.NoMine, (int)States.LastTrip);
+        maq.SetRelation((int)States.LastTrip, (int)Events.Deposit, (int)States.Idle);
     }
 	
 	void Update ()
     {
-		
+        if (maq.GetState() == (int)States.Mining)
+        {
+            if (objectsCarried >= 100)
+            {
+                maq.SetEvent((int)Events.Full);
+            }
+        }
 	}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "gold")
+        {
+            maq.SetEvent((int)Events.OnMine);
+        }
+    }
 }
