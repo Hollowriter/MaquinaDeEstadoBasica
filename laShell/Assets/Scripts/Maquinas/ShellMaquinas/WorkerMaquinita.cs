@@ -7,6 +7,10 @@ public class WorkerMaquinita : MonoBehaviour {
     int state;
     // additional variables
     int objectsCarried;
+    [SerializeField]
+    GameObject mine;
+    [SerializeField]
+    GameObject warehouse;
 
     enum States
     {
