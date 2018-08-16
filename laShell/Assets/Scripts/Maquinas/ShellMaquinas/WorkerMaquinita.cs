@@ -38,6 +38,7 @@ public class WorkerMaquinita : MonoBehaviour {
         state = -1;
         objectsCarried = 0;
         timer = 2;
+        maq.Init(5, 5);
         maq.SetRelation((int)States.Idle, (int)Events.Ordered, (int)States.ToMine);
         maq.SetRelation((int)States.ToMine, (int)Events.OnMine, (int)States.Mining);
         maq.SetRelation((int)States.Mining, (int)Events.Full, (int)States.ToDeposit);
