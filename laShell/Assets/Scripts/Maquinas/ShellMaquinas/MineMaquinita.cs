@@ -34,7 +34,17 @@ public class MineMaquinita : MonoBehaviour {
 
         if (maq.GetState() == (int)States.Depleted)
         {
-            this.gameObject.SetActive(false);
+            this.GetComponent<MeshRenderer>().enabled = false;
         }
 	}
+
+    public void SetMinerals(int _minerals)
+    {
+        minerals = _minerals;
+    }
+
+    public int GetMinerals()
+    {
+        return minerals;
+    }
 }
