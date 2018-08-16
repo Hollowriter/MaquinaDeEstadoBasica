@@ -28,6 +28,7 @@ public class MineMaquinita : MonoBehaviour {
 	
 	void Update ()
     {
+        state = maq.GetState();
         if (minerals <= 0)
         {
             maq.SetEvent((int)Events.Deplete);
