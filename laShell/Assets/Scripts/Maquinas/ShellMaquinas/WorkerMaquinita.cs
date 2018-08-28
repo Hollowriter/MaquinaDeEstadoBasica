@@ -52,42 +52,64 @@ public class WorkerMaquinita : MonoBehaviour {
 	
 	void Update ()
     {
+        Behaviour();
+	}
+    void Behaviour()
+    {
         state = maq.GetState();
+        Ordering();
+        switch (state)
+        {
+            case (int)States.ToMine:
+                ToMine();
+                break;
+            case (int)States.ToDeposit:
+                ToDeposit();
+                break;
+            case (int)States.Mining:
+                Mining();
+                break;
+        }
+        NoMine();
+    }
+    void Ordering()
+    {
         if (Input.GetKeyDown(KeyCode.O))
         {
             maq.SetEvent((int)Events.Ordered);
         }
-        if (state == (int)States.ToMine)
+    }
+    void ToMine()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, mine.gameObject.transform.position, speedObj);
+    }
+    void ToDeposit()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, warehouse.gameObject.transform.position, speedObj);
+    }
+    void Mining()
+    {
+        timer += Time.deltaTime;
+        Debug.Log(timer);
+        if (timer >= limitTimer)
         {
-            transform.position = Vector3.MoveTowards(transform.position, mine.gameObject.transform.position, speedObj);
-            Debug.Log("i'm going");
+            mine.GetComponent<MineMaquinita>().SetMinerals(mine.GetComponent<MineMaquinita>().GetMinerals() - handTaker);
+            objectsCarried += handTaker;
+            timer = 0;
+            Debug.Log("EnterMission");
         }
-        if (state == (int)States.ToDeposit)
+        if (objectsCarried >= 100)
         {
-            transform.position = Vector3.MoveTowards(transform.position, warehouse.gameObject.transform.position, speedObj);
+            maq.SetEvent((int)Events.Full);
         }
-        if (state == (int)States.Mining)
-        {
-            timer += Time.deltaTime;
-            Debug.Log(timer);
-            if (timer >= limitTimer)
-            {
-                mine.GetComponent<MineMaquinita>().SetMinerals(mine.GetComponent<MineMaquinita>().GetMinerals() - handTaker);
-                objectsCarried += handTaker;
-                timer = 0;
-                Debug.Log("EnterMission");
-            }
-            if (objectsCarried >= 100)
-            {
-                maq.SetEvent((int)Events.Full);
-            }
-        }
+    }
+    void NoMine()
+    {
         if (mine.GetComponent<MineMaquinita>().GetMinerals() <= 0)
         {
             maq.SetEvent((int)Events.NoMine);
         }
-	}
-
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "gold")
