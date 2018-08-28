@@ -36,25 +36,29 @@ public class WorkerMaquinita : MonoBehaviour {
 
     void Start ()
     {
-        state = -1;
-        objectsCarried = 0;
-        timer = 2;
-        maq.Init(5, 5);
-        maq.SetRelation((int)States.Idle, (int)Events.Ordered, (int)States.ToMine);
-        maq.SetRelation((int)States.ToMine, (int)Events.OnMine, (int)States.Mining);
-        maq.SetRelation((int)States.Mining, (int)Events.Full, (int)States.ToDeposit);
-        maq.SetRelation((int)States.ToMine, (int)Events.Full, (int)States.ToDeposit);
-        maq.SetRelation((int)States.ToDeposit, (int)Events.Deposit, (int)States.ToMine);
-        maq.SetRelation((int)States.ToMine, (int)Events.NoMine, (int)States.LastTrip);
-        maq.SetRelation((int)States.Mining, (int)Events.NoMine, (int)States.LastTrip);
-        maq.SetRelation((int)States.LastTrip, (int)Events.Deposit, (int)States.Idle);
+		Init();
     }
 	
 	void Update ()
     {
         Behaviour();
 	}
-    void Behaviour()
+	void Init() 
+	{
+		state = -1;
+		objectsCarried = 0;
+		timer = 2;
+		maq.Init(5, 5);
+		maq.SetRelation((int)States.Idle, (int)Events.Ordered, (int)States.ToMine);
+		maq.SetRelation((int)States.ToMine, (int)Events.OnMine, (int)States.Mining);
+		maq.SetRelation((int)States.Mining, (int)Events.Full, (int)States.ToDeposit);
+		maq.SetRelation((int)States.ToMine, (int)Events.Full, (int)States.ToDeposit);
+		maq.SetRelation((int)States.ToDeposit, (int)Events.Deposit, (int)States.ToMine);
+		maq.SetRelation((int)States.ToMine, (int)Events.NoMine, (int)States.LastTrip);
+		maq.SetRelation((int)States.Mining, (int)Events.NoMine, (int)States.LastTrip);
+		maq.SetRelation((int)States.LastTrip, (int)Events.Deposit, (int)States.Idle);
+	}
+	void Behaviour()
     {
         state = maq.GetState();
         Ordering();
