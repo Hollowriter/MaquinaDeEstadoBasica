@@ -66,6 +66,11 @@ public class Node : MonoBehaviour {
         isDestiny = destiny;
     }
 
+    public void SetParent(Node parent)
+    {
+        theParent = parent;
+    }
+
     public bool GetOpen()
     {
         return isOpen;
@@ -74,6 +79,11 @@ public class Node : MonoBehaviour {
     public bool GetClosed()
     {
         return isClosed;
+    }
+
+    public bool GetDestiny()
+    {
+        return isDestiny;
     }
 
     /*public List<Node> GetPath()
@@ -85,6 +95,4 @@ public class Node : MonoBehaviour {
     {
         Gizmos.DrawCube(this.transform.position, Vector3.one);
     }
-
-
 }
