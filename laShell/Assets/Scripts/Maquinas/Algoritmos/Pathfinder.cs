@@ -8,9 +8,10 @@ public class Pathfinder : MonoBehaviour {
     List<Node> path = new List<Node>();
     Node selectedNode = null;
 
-	public List<Node> GetPath(Node origin)
+	public List<Node> GetPath(Node origin, Node destiny)
 	{
         path.Clear();
+        destiny.SetDestiny(true);
 		OpenNode(origin, null);
 		while (openNodes.Count > 0)
 		{

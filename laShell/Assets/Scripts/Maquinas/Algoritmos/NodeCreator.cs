@@ -8,9 +8,12 @@ public class NodeCreator : MonoBehaviour
     public int Rows = 10;
 
     Node[,] nodes;
+    Node nodeOrigin = null;
+    /*[SerializeField]
+    GameObject thing;*/
 
 	// Use this for initialization
-	void Start ()
+	void Awake ()
     {
         nodes = new Node[Cols, Rows];
 
@@ -53,5 +56,27 @@ public class NodeCreator : MonoBehaviour
                 }
             }
         }
+    }
+
+    public Node GetNodeByPosition(Vector3 pos)
+    {
+        nodeOrigin = nodes[0, 0];
+        float dist = (pos - nodes[0, 0].transform.position).magnitude;
+
+        for(int c = 0; c < Cols; c++)
+        {
+            for(int r = 0; r < Rows; r++)
+            {
+                Node n = nodes[c, r];
+                float newDist = (pos - n.transform.position).magnitude;
+
+                if(dist > newDist)
+                {
+                    nodeOrigin = n;
+                    dist = newDist;
+                }
+            }
+        }
+        return nodeOrigin;
     }
 }
