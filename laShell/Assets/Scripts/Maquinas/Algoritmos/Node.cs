@@ -91,6 +91,11 @@ public class Node : MonoBehaviour {
         return isDestiny;
     }
 
+    public Node GetParent() 
+    {
+        return theParent;
+    }
+
     /*public List<Node> GetPath()
     {
         return path;

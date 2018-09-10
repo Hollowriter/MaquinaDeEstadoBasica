@@ -10,12 +10,16 @@ public class Pathfinder : MonoBehaviour {
 
 	public List<Node> GetPath(Node origin)
 	{
+        path.Clear();
 		OpenNode(origin, null);
 		while (openNodes.Count > 0)
 		{
 			selectedNode = SelectNode();
-			if (selectedNode.GetDestiny())
-				return path;
+            if(selectedNode.GetDestiny()) 
+            {
+                CallForParents(selectedNode);
+                return path;
+            }
 			CloseNode(selectedNode);
             OpenAdjacents(selectedNode);
 		}
@@ -56,6 +60,15 @@ public class Pathfinder : MonoBehaviour {
     public Node SelectNode()
     {
         return openNodes[0];
+    }
+
+    public void CallForParents(Node n) 
+    {
+        if(n.GetParent()) 
+        {
+            path.Add(n.GetParent());
+            CallForParents(n.GetParent());
+        }
     }
 
     public bool DestinyNode()
