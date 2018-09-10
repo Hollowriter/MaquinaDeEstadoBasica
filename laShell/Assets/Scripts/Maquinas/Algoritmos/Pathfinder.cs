@@ -7,39 +7,55 @@ public class Pathfinder : MonoBehaviour {
     List<Node> closedNodes = new List<Node>();
     List<Node> path = new List<Node>();
     Node selectedNode = null;
-	
-	void Update ()
-    {
-		
+
+	public List<Node> GetPath(Node origin)
+	{
+		OpenNode(origin, null);
+		while (openNodes.Count > 0)
+		{
+			selectedNode = SelectNode();
+			if (selectedNode.GetDestiny())
+				return path;
+			CloseNode(selectedNode);
+            OpenAdjacents(selectedNode);
+		}
+		return path;
 	}
 
     public void OpenNode(Node n, Node parent)
     {
-        if (!n.GetOpen())
+        if (!n.GetOpen() && !n.GetClosed())
         {
-            if (parent == null)
-            {
-                n.SetParent(null);
-            }
-            else
+            if (parent != null)
             {
                 n.SetParent(parent);
             }
             n.SetOpen(true);
-            SelectNode(n);
             openNodes.Add(n);
         }
     }
 
-    public void CloseNode()
+    public void CloseNode(Node n)
     {
-        if (!selectedNode.GetClosed() && selectedNode.GetOpen())
-            selectedNode.SetClosed(true);
+        if (!n.GetClosed() && n.GetOpen())
+		{
+            n.SetClosed(true);
+			openNodes.Remove(n);
+			closedNodes.Add(n);
+		}
     }
+	
+	public void OpenAdjacents(Node n)
+	{
+        for(int i = 0; i < n.Adjacents().Count; i++) 
+        {
+            OpenNode(n.Adjacents()[i], n);
+        }
+	}
 
-    public void SelectNode(Node n)
+    public Node SelectNode()
     {
-        selectedNode = n;
+        return openNodes[0];
     }
 
     public bool DestinyNode()

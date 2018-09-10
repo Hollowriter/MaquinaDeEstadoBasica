@@ -18,6 +18,11 @@ public class Node : MonoBehaviour {
         if (!obj.Contains(n))
             obj.Add(n);
     }
+	
+	public List<Node> Adjacents()
+	{
+		return obj;
+	}
 
    /* public void OpenNode(Node n, Node parent)
     {
