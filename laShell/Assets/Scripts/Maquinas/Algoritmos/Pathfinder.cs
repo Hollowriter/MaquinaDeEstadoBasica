@@ -26,7 +26,24 @@ public class Pathfinder : MonoBehaviour {
                 n.SetParent(parent);
             }
             n.SetOpen(true);
+            SelectNode(n);
             openNodes.Add(n);
         }
+    }
+
+    public void CloseNode()
+    {
+        if (!selectedNode.GetClosed() && selectedNode.GetOpen())
+            selectedNode.SetClosed(true);
+    }
+
+    public void SelectNode(Node n)
+    {
+        selectedNode = n;
+    }
+
+    public bool DestinyNode()
+    {
+        return selectedNode.GetDestiny();
     }
 }
