@@ -67,8 +67,9 @@ public class Pathfinder : MonoBehaviour {
     {
         if(n.GetParent()) 
         {
-            path.Add(n.GetParent());
+            n.GetParent().SetAsPath(true);
             CallForParents(n.GetParent());
+            path.Add(n.GetParent());
         }
     }
 

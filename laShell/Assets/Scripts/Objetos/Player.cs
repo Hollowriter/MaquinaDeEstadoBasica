@@ -9,15 +9,36 @@ public class Player : MonoBehaviour {
     List<Node> thePath = new List<Node>();
     [SerializeField]
     GameObject mine;
+    int id;
+    const float speed = 3.25f;
+    Vector3 destiny;
+
 
 	void Start ()
     {
         pathfinder = GetComponent<Pathfinder>();
-        thePath = pathfinder.GetPath(nodeCreator.GetNodeByPosition(this.transform.position), nodeCreator.GetNodeByPosition(mine.transform.position));
+        thePath = pathfinder.GetPath(nodeCreator.GetNodeByPosition(transform.position), nodeCreator.GetNodeByPosition(mine.transform.position));
+        id = 0;
+        destiny = Vector3.zero;
 	}
 	
 	void Update ()
     {
-		
+        float step = speed * Time.deltaTime;
+        if(id < thePath.Count) 
+        {
+            destiny = thePath[id].transform.position;
+        }
+
+
+        //Vector3 dir = (destiny - transform.position).normalized;
+        transform.position = Vector3.MoveTowards(transform.position, destiny, step);
+
+        //Debug.Log(transform.position+" - " + dir +" - " + step);
+
+        if((destiny - transform.position).magnitude < 0.25f) 
+        {
+            id++;
+        }
 	}
 }

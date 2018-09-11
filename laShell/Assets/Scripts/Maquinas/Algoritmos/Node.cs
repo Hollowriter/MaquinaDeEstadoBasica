@@ -11,6 +11,7 @@ public class Node : MonoBehaviour {
     bool isOpen = false;
     bool isClosed = false;
     bool isDestiny = false;
+    bool isPath = false;
     Node theParent = null;
 
     public void AddAdjacent(Node n)
@@ -76,6 +77,11 @@ public class Node : MonoBehaviour {
         theParent = parent;
     }
 
+    public void SetAsPath(bool sure) 
+    {
+        isPath = sure;
+    }
+
     public bool GetOpen()
     {
         return isOpen;
@@ -91,6 +97,11 @@ public class Node : MonoBehaviour {
         return isDestiny;
     }
 
+    public bool GetAsPath() 
+    {
+        return isPath;
+    }
+
     public Node GetParent() 
     {
         return theParent;
@@ -103,6 +114,10 @@ public class Node : MonoBehaviour {
 
     private void OnDrawGizmos()
     {
+        if(isPath == true) 
+            {
+            Gizmos.color = Color.blue;
+        }
         Gizmos.DrawCube(this.transform.position, Vector3.one);
     }
 }
