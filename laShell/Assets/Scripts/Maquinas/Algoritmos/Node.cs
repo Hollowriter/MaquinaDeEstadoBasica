@@ -25,38 +25,6 @@ public class Node : MonoBehaviour {
 		return obj;
 	}
 
-   /* public void OpenNode(Node n, Node parent)
-    {
-        if(parent == null)
-        {
-            theParent = null;
-        }
-
-        if(n.GetOpen() == false && n.GetClosed() == false)
-        {
-            n.SetOpen(true);
-
-            if(isDestiny)
-            {
-                obj.Clear();
-                GetPath();
-            }
-            else
-            {
-                n.SetClosed(true);
-                for(int i = 0; i < obj.Count; i++)
-                {
-                    OpenNode(obj[i], this);
-                }
-            }
-        }
-    }*/ // A pathfinder
-
-   /* public void SelectNode()
-    {
-
-    }*/ // A pathfinder
-
     public void SetOpen(bool open)
     {
         isOpen = open;
@@ -75,11 +43,24 @@ public class Node : MonoBehaviour {
     public void SetParent(Node parent)
     {
         theParent = parent;
+        SetTotalCost(theParent);
     }
 
     public void SetAsPath(bool sure) 
     {
         isPath = sure;
+    }
+
+    public void SetTotalCost(Node parent)  
+    {
+        if(parent == null) 
+        {
+            totalCost = cost;
+        }
+        else 
+        {
+            totalCost = cost + parent.totalCost;
+        }
     }
 
     public bool GetOpen()
@@ -100,6 +81,11 @@ public class Node : MonoBehaviour {
     public bool GetAsPath() 
     {
         return isPath;
+    }
+
+    public float GetTotalCost() 
+    {
+        return totalCost;
     }
 
     public Node GetParent() 
