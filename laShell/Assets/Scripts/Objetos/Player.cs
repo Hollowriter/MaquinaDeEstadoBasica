@@ -30,11 +30,7 @@ public class Player : MonoBehaviour {
             destiny = thePath[id].transform.position;
         }
 
-
-        //Vector3 dir = (destiny - transform.position).normalized;
         transform.position = Vector3.MoveTowards(transform.position, destiny, step);
-
-        //Debug.Log(transform.position+" - " + dir +" - " + step);
 
         if((destiny - transform.position).magnitude < 0.25f) 
         {

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pathfinder : MonoBehaviour {
+public class Pathfinder : MonoBehaviour
+{
     List<Node> openNodes = new List<Node>();
     List<Node> closedNodes = new List<Node>();
     List<Node> path = new List<Node>();
