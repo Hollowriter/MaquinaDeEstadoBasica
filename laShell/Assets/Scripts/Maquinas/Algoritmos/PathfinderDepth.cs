@@ -20,8 +20,8 @@ public class PathfinderDepth : MonoBehaviour
             if (selectedNode.GetDestiny())
             {
                 CallForParents(selectedNode);
+                Debug.Log("seinPath");
                 return path;
-                Debug.Log("seinpath");
             }
             CloseNode(selectedNode);
             OpenAdjacents(selectedNode);
@@ -33,12 +33,12 @@ public class PathfinderDepth : MonoBehaviour
     {
         if (!n.GetOpen() && !n.GetClosed())
         {
+            openNodes.Add(n);
             if (parent != null)
             {
                 n.SetParent(parent);
             }
             n.SetOpen(true);
-            openNodes.Add(n);
         }
     }
 
@@ -46,9 +46,9 @@ public class PathfinderDepth : MonoBehaviour
     {
         if (!n.GetClosed() && n.GetOpen())
         {
+            closedNodes.Add(n);
             n.SetClosed(true);
             openNodes.Remove(n);
-            closedNodes.Add(n);
         }
     }
 
@@ -71,8 +71,8 @@ public class PathfinderDepth : MonoBehaviour
         if (n.GetParent())
         {
             n.GetParent().SetAsPath(true);
-            CallForParents(n.GetParent());
             path.Add(n.GetParent());
+            CallForParents(n.GetParent());
         }
     }
 

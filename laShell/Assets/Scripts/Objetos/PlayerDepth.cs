@@ -14,7 +14,6 @@ public class PlayerDepth : MonoBehaviour
     const float speed = 3.25f;
     Vector3 destiny;
 
-
     void Start()
     {
         pathfinder = GetComponent<PathfinderDepth>();
@@ -31,7 +30,7 @@ public class PlayerDepth : MonoBehaviour
         if (id >= 0)
         {
             destiny = thePath[id].transform.position;
-            Debug.Log("la concha");
+            // Debug.Log(id);
         }
 
         transform.position = Vector3.MoveTowards(transform.position, destiny, step);

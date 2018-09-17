@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour 
+{
     [SerializeField]
     NodeCreator nodeCreator;
     Pathfinder pathfinder;
@@ -12,7 +13,6 @@ public class Player : MonoBehaviour {
     int id;
     const float speed = 3.25f;
     Vector3 destiny;
-
 
 	void Start ()
     {
