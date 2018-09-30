@@ -20,7 +20,6 @@ public class PathfinderDepth : MonoBehaviour
             if (selectedNode.GetDestiny())
             {
                 CallForParents(selectedNode);
-                Debug.Log("seinPath");
                 return path;
             }
             CloseNode(selectedNode);

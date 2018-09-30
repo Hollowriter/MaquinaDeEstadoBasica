@@ -25,14 +25,14 @@ public class PlayerDickjstra : MonoBehaviour
     void Update() 
     {
         float step = speed * Time.deltaTime;
-        if(id < thePath.Count) 
+        if (id < thePath.Count) 
         {
             destiny = thePath[id].transform.position;
         }
 
         transform.position = Vector3.MoveTowards(transform.position, destiny, step);
 
-        if((destiny - transform.position).magnitude < 0.25f) 
+        if ((destiny - transform.position).magnitude < 0.25f) 
         {
             id++;
         }
