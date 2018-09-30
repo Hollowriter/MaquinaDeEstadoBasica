@@ -190,8 +190,9 @@ GameObject:
   - component: {fileID: 969399010}
   - component: {fileID: 969399009}
   - component: {fileID: 969399008}
-  - component: {fileID: 969399012}
   - component: {fileID: 969399013}
+  - component: {fileID: 969399014}
+  - component: {fileID: 969399012}
   m_Layer: 0
   m_Name: Worker
   m_TagString: worker
@@ -274,9 +275,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 969399007}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cabe8e96f5e32d42abb354df775f1a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 9feebcda1ffb12741b9e25fa7a06e945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nodes: {fileID: 2096526840}
   mine: {fileID: 2007607125}
   warehouse: {fileID: 1262814116}
 --- !u!54 &969399013
@@ -294,6 +296,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &969399014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 969399007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93ad45579fbd402408efc48e1f9067b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1240293068
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,3 +648,9 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cac4afd2352ba734095a87ccdd4f4a2d, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &2096526840 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114297355033969250, guid: cac4afd2352ba734095a87ccdd4f4a2d,
+    type: 2}
+  m_PrefabInternal: {fileID: 2037414494}
+  m_Script: {fileID: 11500000, guid: f95c3105d0d379c44b2db9001fbc7750, type: 3}
