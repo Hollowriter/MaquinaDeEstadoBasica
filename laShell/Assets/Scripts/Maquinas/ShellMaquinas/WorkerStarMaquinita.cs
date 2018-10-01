@@ -12,7 +12,7 @@ public class WorkerStarMaquinita : MonoBehaviour {
     const float limitTimer = 2;
     const int handTaker = 10;
     int id;
-    bool movingToMine = false;
+    // bool movingToMine = false;
     Vector3 destiny;
     PathfinderStar pathfinder;
     List<Node> thePathMine;
@@ -48,6 +48,8 @@ public class WorkerStarMaquinita : MonoBehaviour {
         pathfinder = GetComponent<PathfinderStar>();
         thePathMine = pathfinder.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(mine.transform.position));
         thePathWarehouse = pathfinder.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(warehouse.transform.position));
+        Debug.Log("PathMine: " + thePathMine.Count);
+        Debug.Log("PathWarehouse: " + thePathWarehouse.Count);
         id = 0;
         destiny = Vector3.zero;
     }
@@ -79,16 +81,16 @@ public class WorkerStarMaquinita : MonoBehaviour {
         {
             case (int)States.ToMine:
                 ToMine();
-                Debug.Log("asd");
-                movingToMine = true;
+               /*Debug.Log("asd");
+                movingToMine = true;*/
                 break;
             case (int)States.ToDeposit:
                 ToDeposit();
-                movingToMine = false;
+                // movingToMine = false;
                 break;
             case (int)States.Mining:
                 Mining();
-                movingToMine = true;
+                // movingToMine = true;
                 break;
         }
         NoMine();
@@ -104,44 +106,75 @@ public class WorkerStarMaquinita : MonoBehaviour {
     {
         // transform.position = Vector3.MoveTowards(transform.position, mine.gameObject.transform.position, speedObj);
         float step = speedObj * Time.deltaTime;
+        // Debug.Log(id);
         if (id < thePathMine.Count)
         {
             destiny = thePathMine[id].transform.position;
+        }
+        else
+        {
+            maq.SetEvent((int)Events.OnMine);
+            id = 0;
+            Debug.Log("estoy aqui");
+            thePathWarehouse = pathfinder.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(warehouse.transform.position));
+            Debug.Log("ToWarehouse: " + thePathWarehouse.Count);
         }
         transform.position = Vector3.MoveTowards(transform.position, destiny, step);
         if ((destiny - transform.position).magnitude < 0.25f)
         {
             id++;
         }
+        /*else
+        {
+            maq.SetEvent((int)Events.OnMine);
+            id = 0;
+            Debug.Log("se termino la lista");
+        }*/
     }
     void ToDeposit()
     {
         // transform.position = Vector3.MoveTowards(transform.position, warehouse.gameObject.transform.position, speedObj);
         float step = speedObj * Time.deltaTime;
+        //Debug.Log(id);
         if (id < thePathWarehouse.Count)
         {
             destiny = thePathWarehouse[id].transform.position;
+        }
+        else
+        {
+            maq.SetEvent((int)Events.Deposit);
+            id = 0;
+            objectsCarried = 0;
+            thePathMine = pathfinder.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(mine.transform.position));
+            Debug.Log("estoy alla");
+            Debug.Log("ToMine: " + thePathMine.Count);
         }
         transform.position = Vector3.MoveTowards(transform.position, destiny, step);
         if ((destiny - transform.position).magnitude < 0.25f)
         {
             id++;
         }
+        /*else
+        {
+            maq.SetEvent((int)Events.Deposit);
+            id = 0;
+            Debug.Log("se termino la linea");
+        }*/
     }
     void Mining()
     {
         timer += Time.deltaTime;
-        Debug.Log(timer);
         if (timer >= limitTimer)
         {
             mine.GetComponent<MineMaquinita>().SetMinerals(mine.GetComponent<MineMaquinita>().GetMinerals() - handTaker);
             objectsCarried += handTaker;
             timer = 0;
-            Debug.Log("EnterMission");
+            //Debug.Log("EnterMission");
         }
         if (objectsCarried >= 100)
         {
             maq.SetEvent((int)Events.Full);
+            thePathWarehouse = pathfinder.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(warehouse.transform.position));
         }
     }
     void NoMine()
@@ -158,20 +191,12 @@ public class WorkerStarMaquinita : MonoBehaviour {
             Debug.Log("colisiona");
             maq.SetEvent((int)Events.OnMine);
             transform.position = Vector3.MoveTowards(transform.position, mine.gameObject.transform.position, 0);
-            if (movingToMine == true)
-            {
-               // id = 0;
-            }
         }
         if (other.gameObject.tag == "warehouse")
         {
             Debug.Log("entra");
             maq.SetEvent((int)Events.Deposit);
             objectsCarried = 0;
-            if (movingToMine == false)
-            {
-              //  id = 0;
-            }
         }
     }
 }
