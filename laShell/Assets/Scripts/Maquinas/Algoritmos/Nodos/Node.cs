@@ -23,8 +23,24 @@ public class Node : MonoBehaviour {
         if (!obj.Contains(n))
             obj.Add(n);
     }
-	
-	public List<Node> Adjacents()
+
+    public void Reset()
+    {
+        obj.Clear();
+        cost = 1;
+        heuristic = 0;
+        startPointCost = 0;
+        goalPointCost = 0;
+        totalCost = 0;
+        isOpen = false;
+        isClosed = false;
+        isDestiny = false;
+        isPath = false;
+        theParent = null;
+        theChild = null;
+    }
+
+    public List<Node> Adjacents()
 	{
 		return obj;
 	}

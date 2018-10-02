@@ -11,7 +11,7 @@ public class PathfinderStar : MonoBehaviour
 
     public List<Node> GetPath(Node origin, Node destiny)
     {
-        path.Clear();
+        //ClearAnything();
         destiny.SetDestiny(true);
         OpenNode(origin, null);
         while (openNodes.Count > 0)
@@ -26,6 +26,14 @@ public class PathfinderStar : MonoBehaviour
             OpenAdjacents(selectedNode);
         }
         return path;
+    }
+
+    public void ClearAnything()
+    {
+        path.Clear();
+        openNodes.Clear();
+        closedNodes.Clear();
+        selectedNode = null;
     }
 
     public void OpenNode(Node n, Node parent)

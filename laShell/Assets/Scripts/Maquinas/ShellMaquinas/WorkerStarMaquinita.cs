@@ -116,6 +116,7 @@ public class WorkerStarMaquinita : MonoBehaviour {
             maq.SetEvent((int)Events.OnMine);
             id = 0;
             Debug.Log("estoy aqui");
+            pathfinder.ClearAnything();
             thePathWarehouse = pathfinder.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(warehouse.transform.position));
             Debug.Log("ToWarehouse: " + thePathWarehouse.Count);
         }
@@ -145,6 +146,8 @@ public class WorkerStarMaquinita : MonoBehaviour {
             maq.SetEvent((int)Events.Deposit);
             id = 0;
             objectsCarried = 0;
+            //destiny = Vector3.zero;
+            pathfinder.ClearAnything();
             thePathMine = pathfinder.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(mine.transform.position));
             Debug.Log("estoy alla");
             Debug.Log("ToMine: " + thePathMine.Count);
@@ -174,6 +177,8 @@ public class WorkerStarMaquinita : MonoBehaviour {
         if (objectsCarried >= 100)
         {
             maq.SetEvent((int)Events.Full);
+            //destiny = Vector3.zero;
+            pathfinder.ClearAnything();
             thePathWarehouse = pathfinder.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(warehouse.transform.position));
         }
     }
@@ -190,6 +195,7 @@ public class WorkerStarMaquinita : MonoBehaviour {
         {
             Debug.Log("colisiona");
             maq.SetEvent((int)Events.OnMine);
+            //destiny = Vector3.zero;
             transform.position = Vector3.MoveTowards(transform.position, mine.gameObject.transform.position, 0);
         }
         if (other.gameObject.tag == "warehouse")
@@ -197,6 +203,7 @@ public class WorkerStarMaquinita : MonoBehaviour {
             Debug.Log("entra");
             maq.SetEvent((int)Events.Deposit);
             objectsCarried = 0;
+            //destiny = Vector3.zero;
         }
     }
 }
