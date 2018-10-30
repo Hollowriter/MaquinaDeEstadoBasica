@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FlockingManager : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
+    List<Boid> boidsList;
+    void Start () {
+        boidsList = new List<Boid>();
+    }
 	
-	// Update is called once per frame
 	void Update () {
 		
 	}

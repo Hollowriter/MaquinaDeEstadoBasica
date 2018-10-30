@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Boid : MonoBehaviour
 {
+    Transform thisBoidPosition;
     List<Boid> boidsISee;
     Vector3 positionPromediate;
     Vector3 cohesive;
@@ -25,12 +26,43 @@ public class Boid : MonoBehaviour
         resultant = Vector3.zero;
         positionPromediate = Vector3.zero;
         boidsISee = new List<Boid>();
+        thisBoidPosition = GetComponent<Transform>();
 	}
 
 	void Update ()
     {
 		
 	}
+
+    public void SetCohesive(Vector3 _cohesive)
+    {
+        cohesive = _cohesive;
+    }
+
+    public void SetSeparate(Vector3 _separate)
+    {
+        separate = _separate;
+    }
+
+    public void SetAligning(Vector3 _aligning)
+    {
+        aligning = _aligning;
+    }
+
+    public Vector3 GetCohesive()
+    {
+        return cohesive;
+    }
+
+    public Vector3 GetSeparate()
+    {
+        return separate;
+    }
+
+    public Vector3 GetAligning()
+    {
+        return aligning;
+    }
 
     public void InBoidSight()
     {
