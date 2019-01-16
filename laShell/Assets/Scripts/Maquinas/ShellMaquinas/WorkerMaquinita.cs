@@ -86,6 +86,7 @@ public class WorkerMaquinita : MonoBehaviour {
     void ToMine()
     {
         transform.position = Vector3.MoveTowards(transform.position, mine.gameObject.transform.position, speedObj);
+        // Debug.Log("To mine");
     }
     void ToDeposit()
     {
@@ -100,7 +101,7 @@ public class WorkerMaquinita : MonoBehaviour {
             mine.GetComponent<MineMaquinita>().SetMinerals(mine.GetComponent<MineMaquinita>().GetMinerals() - handTaker);
             objectsCarried += handTaker;
             timer = 0;
-            Debug.Log("EnterMission");
+        //    Debug.Log("EnterMission");
         }
         if (objectsCarried >= 100)
         {
@@ -118,13 +119,13 @@ public class WorkerMaquinita : MonoBehaviour {
     {
         if (other.gameObject.tag == "gold")
         {
-            Debug.Log("colisiona");
+        //    Debug.Log("colisiona");
             maq.SetEvent((int)Events.OnMine);
             transform.position = Vector3.MoveTowards(transform.position, mine.gameObject.transform.position, 0);
         }
         if (other.gameObject.tag == "warehouse")
         {
-            Debug.Log("entra");
+        //    Debug.Log("entra");
             maq.SetEvent((int)Events.Deposit);
             objectsCarried = 0;
         }
