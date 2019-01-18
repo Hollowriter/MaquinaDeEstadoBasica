@@ -50,8 +50,12 @@ public class WorkerStarMaquinita : MonoBehaviour {
         goingToWarehouse = GetComponent<PathfinderStarToWarehouse>();
         thePathMine = goingToMine.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(mine.transform.position));
         Debug.Log("PathMine: " + thePathMine.Count);
+        Debug.Log("Mine: " + mine.transform.position);
+        Debug.Log("MNode: " + nodes.GetNodeByPosition(mine.transform.position).transform.position);
         thePathWarehouse = goingToWarehouse.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(warehouse.transform.position));
         Debug.Log("PathWarehouse: " + thePathWarehouse.Count);
+        Debug.Log("Warehouse: " + warehouse.transform.position);
+        Debug.Log("WNode: " + nodes.GetNodeByPosition(warehouse.transform.position).transform.position);
         id = 0;
         destiny = Vector3.zero;
     }
