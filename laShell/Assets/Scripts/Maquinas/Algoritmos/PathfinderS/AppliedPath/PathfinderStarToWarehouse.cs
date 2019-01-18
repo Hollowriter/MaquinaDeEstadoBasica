@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathfinderStar : MonoBehaviour
+public class PathfinderStarToWarehouse : MonoBehaviour
 {
     List<Node> openNodes = new List<Node>();
     List<Node> closedNodes = new List<Node>();
