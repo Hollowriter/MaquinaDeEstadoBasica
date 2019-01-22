@@ -16,6 +16,7 @@ public class WorkerStarMaquinita : MonoBehaviour {
     Vector3 destiny;
     PathfinderStarToMine goingToMine;
     PathfinderStarToWarehouse goingToWarehouse;
+    PathfinderStar pathfinderStar;
     List<Node> thePathMine;
     List<Node> thePathWarehouse;
     [SerializeField]
@@ -48,11 +49,14 @@ public class WorkerStarMaquinita : MonoBehaviour {
         Init();
         goingToMine = GetComponent<PathfinderStarToMine>();
         goingToWarehouse = GetComponent<PathfinderStarToWarehouse>();
+        // pathfinderStar = GetComponent<PathfinderStar>();
         thePathMine = goingToMine.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(mine.transform.position));
+        // thePathMine = pathfinderStar.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(mine.transform.position));
         Debug.Log("PathMine: " + thePathMine.Count);
         Debug.Log("Mine: " + mine.transform.position);
         Debug.Log("MNode: " + nodes.GetNodeByPosition(mine.transform.position).transform.position);
         thePathWarehouse = goingToWarehouse.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(warehouse.transform.position));
+        // thePathWarehouse = pathfinderStar.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(warehouse.transform.position));
         Debug.Log("PathWarehouse: " + thePathWarehouse.Count);
         Debug.Log("Warehouse: " + warehouse.transform.position);
         Debug.Log("WNode: " + nodes.GetNodeByPosition(warehouse.transform.position).transform.position);
@@ -98,6 +102,11 @@ public class WorkerStarMaquinita : MonoBehaviour {
                 Mining();
                 // movingToMine = true;
                 break;
+            case (int)States.Idle:
+                //Debug.Log("Idling");
+                thePathMine = goingToMine.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(mine.transform.position));
+                thePathWarehouse = goingToWarehouse.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(warehouse.transform.position));
+                break;
         }
         NoMine();
     }
@@ -123,8 +132,12 @@ public class WorkerStarMaquinita : MonoBehaviour {
             id = 0;
             Debug.Log("estoy aqui");
             goingToMine.ClearAnything();
-            goingToWarehouse.ClearAnything();
+             goingToWarehouse.ClearAnything();
+            // pathfinderStar.ClearAnything();
+            thePathMine.Clear();
+            thePathWarehouse.Clear();
             thePathWarehouse = goingToWarehouse.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(warehouse.transform.position));
+            // thePathWarehouse = pathfinderStar.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(warehouse.transform.position));
             Debug.Log("ToWarehouse: " + thePathWarehouse.Count);
         }
         transform.position = Vector3.MoveTowards(transform.position, destiny, step);
@@ -156,7 +169,11 @@ public class WorkerStarMaquinita : MonoBehaviour {
             //destiny = Vector3.zero;
             goingToMine.ClearAnything();
             goingToWarehouse.ClearAnything();
+            // pathfinderStar.ClearAnything();
+            thePathWarehouse.Clear();
+            thePathMine.Clear();
             thePathMine = goingToMine.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(mine.transform.position));
+            // thePathMine = pathfinderStar.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(mine.transform.position));
             Debug.Log("estoy alla");
             Debug.Log("ToMine: " + thePathMine.Count);
         }
@@ -188,7 +205,10 @@ public class WorkerStarMaquinita : MonoBehaviour {
             //destiny = Vector3.zero;
             goingToMine.ClearAnything();
             goingToWarehouse.ClearAnything();
+            thePathWarehouse.Clear();
+            thePathMine.Clear();
             thePathWarehouse = goingToWarehouse.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(warehouse.transform.position));
+            // thePathWarehouse = pathfinderStar.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(warehouse.transform.position));
         }
     }
     void NoMine()

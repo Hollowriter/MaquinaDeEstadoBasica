@@ -64,9 +64,12 @@ public class Node : MonoBehaviour {
     {
         //startPointCost++;
         theParent = parent;
-        SetTotalCost(theParent);
-        SetStartTotalCost(theParent);
-        theParent.SetChild(this);
+        if (theParent != null)
+        {
+            SetTotalCost(theParent);
+            SetStartTotalCost(theParent);
+            theParent.SetChild(this);
+        }
         // startPointCost = theParent.GetStartTotalCost() + startPointCost;
     }
 

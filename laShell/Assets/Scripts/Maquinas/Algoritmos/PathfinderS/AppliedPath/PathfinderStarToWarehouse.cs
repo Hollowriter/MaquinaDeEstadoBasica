@@ -8,14 +8,18 @@ public class PathfinderStarToWarehouse : MonoBehaviour
     List<Node> closedNodes = new List<Node>();
     List<Node> path = new List<Node>();
     Node selectedNode = null;
+    Node selectedDestiny = null;
 
     public List<Node> GetPath(Node origin, Node destiny)
     {
         ClearAnything();
+        selectedDestiny = destiny;
         destiny.SetDestiny(true);
         OpenNode(origin, null);
+        Debug.Log("WOpen: " + openNodes.Count);
         while (openNodes.Count > 0)
         {
+            // Debug.Log("WSelectingNode");
             selectedNode = SelectNode();
             if (selectedNode.GetDestiny())
             {
@@ -30,6 +34,44 @@ public class PathfinderStarToWarehouse : MonoBehaviour
 
     public void ClearAnything()
     {
+        if (selectedDestiny != null)
+        {
+            // Debug.Log("WDestinyNotNull");
+            selectedDestiny.SetDestiny(false);
+            selectedDestiny = null;
+        }
+        if (path.Count > 0)
+        {
+            // Debug.Log("Warehouse clear");
+            for (int i = 0; i < path.Count; i++)
+            {
+                path[i].SetAsPath(false);
+                path[i].SetOpen(false);
+                path[i].SetClosed(false);
+                if (path[i].GetChild() != null)
+                {
+                    path[i].SetChild(null);
+                }
+                if (path[i].GetParent() != null)
+                {
+                    path[i].SetParent(null);
+                }
+            }
+        }
+        if (openNodes.Count > 0)
+        {
+            for (int i = 0; i < openNodes.Count; i++)
+            {
+                openNodes[i].SetOpen(false);
+            }
+        }
+        if (closedNodes.Count > 0)
+        {
+            for (int i = 0; i < closedNodes.Count; i++)
+            {
+                closedNodes[i].SetClosed(false);
+            }
+        }
         path.Clear();
         openNodes.Clear();
         closedNodes.Clear();

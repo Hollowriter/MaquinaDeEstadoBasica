@@ -8,10 +8,19 @@ public class PathfinderStar : MonoBehaviour
     List<Node> closedNodes = new List<Node>();
     List<Node> path = new List<Node>();
     Node selectedNode = null;
+    Node selectedDestiny = null;
 
     public List<Node> GetPath(Node origin, Node destiny)
     {
-        ClearAnything();
+        /*if (selectedDestiny == null)
+        {*/
+            ClearAnything();
+        // }
+        /*else
+        {
+            ClearAnythingWithNode(selectedDestiny);
+        }*/
+        selectedDestiny = destiny;
         destiny.SetDestiny(true);
         OpenNode(origin, null);
         while (openNodes.Count > 0)
@@ -30,11 +39,56 @@ public class PathfinderStar : MonoBehaviour
 
     public void ClearAnything()
     {
+        if (selectedDestiny != null)
+        {
+            selectedDestiny.SetDestiny(false);
+            selectedDestiny = null;
+        }
+        if (path.Count > 0)
+        {
+            for (int i = 0; i < path.Count; i++)
+            {
+                path[i].SetAsPath(false);
+                path[i].SetOpen(false);
+                path[i].SetClosed(false);
+                if (path[i].GetChild() != null)
+                {
+                    path[i].SetChild(null);
+                }
+                if (path[i].GetParent() != null)
+                {
+                    path[i].SetParent(null);
+                }
+            }
+        }
+        if (openNodes.Count > 0)
+        {
+            for (int i = 0; i < openNodes.Count; i++)
+            {
+                openNodes[i].SetOpen(false);
+            }
+        }
+        if (closedNodes.Count > 0)
+        {
+            for (int i = 0; i < closedNodes.Count; i++)
+            {
+                closedNodes[i].SetClosed(false);
+            }
+        }
         path.Clear();
         openNodes.Clear();
         closedNodes.Clear();
         selectedNode = null;
     }
+
+    /*public void ClearAnythingWithNode(Node destiny)
+    {
+        destiny.SetDestiny(false);
+        path.Clear();
+        openNodes.Clear();
+        closedNodes.Clear();
+        selectedNode = null;
+    }*/
 
     public void OpenNode(Node n, Node parent)
     {
