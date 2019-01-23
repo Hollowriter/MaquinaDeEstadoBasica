@@ -15,8 +15,10 @@ public class PathfinderStarToMine : MonoBehaviour
         ClearAnything();
         selectedDestiny = destiny;
         destiny.SetDestiny(true);
+        // Debug.Log("MineOriginNode");
         OpenNode(origin, null);
-        Debug.Log("Mopen: " + openNodes.Count);
+        // Debug.Log("Mopen: " + openNodes.Count);
+        // Debug.Log("OMine: " + origin.transform.position);
         while (openNodes.Count > 0)
         {
             // Debug.Log("MSelectingNode");
@@ -63,6 +65,10 @@ public class PathfinderStarToMine : MonoBehaviour
             for (int i = 0; i < openNodes.Count; i++)
             {
                 openNodes[i].SetOpen(false);
+                if (openNodes[i].GetChild() != null)
+                {
+                    openNodes[i].SetChild(null);
+                }
             }
         }
         if (closedNodes.Count > 0)
@@ -70,6 +76,10 @@ public class PathfinderStarToMine : MonoBehaviour
             for (int i = 0; i < closedNodes.Count; i++)
             {
                 closedNodes[i].SetClosed(false);
+                if (closedNodes[i].GetChild() != null)
+                {
+                    closedNodes[i].SetChild(null);
+                }
             }
         }
         path.Clear();
@@ -80,8 +90,11 @@ public class PathfinderStarToMine : MonoBehaviour
 
     public void OpenNode(Node n, Node parent)
     {
+        // Debug.Log("Open: " + n.GetOpen());
+        // Debug.Log("Closed: " + n.GetClosed());
         if (!n.GetOpen() && !n.GetClosed())
         {
+           // Debug.Log("MineNodeOpen");
             if (parent != null)
             {
                 n.SetParent(parent);
@@ -113,11 +126,14 @@ public class PathfinderStarToMine : MonoBehaviour
     {
         int selectedNode = 0;
         float valueNode = openNodes[selectedNode].GetTotalCost() + openNodes[selectedNode].GetHeuristicalTotalCost();
+        // Debug.Log("VNodeMine: " + valueNode);
         for (int i = 0; i < openNodes.Count; i++)
         {
             if (openNodes[i].GetTotalCost() + openNodes[i].GetHeuristicalTotalCost() < valueNode)
             {
+                // Debug.Log("enterinmodnodmine");
                 valueNode = openNodes[i].GetTotalCost() + openNodes[i].GetHeuristicalTotalCost();
+                // Debug.Log("VNodeMineModified: " + valueNode);
                 selectedNode = i;
             }
         }

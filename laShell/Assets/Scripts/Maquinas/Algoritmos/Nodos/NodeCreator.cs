@@ -58,6 +58,22 @@ public class NodeCreator : MonoBehaviour
         }
     }
 
+    public void ResetAllNodes()
+    {
+        for (int row = 0; row < Rows; row++)
+        {
+            for (int col = 0; col < Cols; col++)
+            {
+                nodes[col, row].SetOpen(false);
+                nodes[col, row].SetClosed(false);
+                nodes[col, row].SetDestiny(false);
+                nodes[col, row].SetAsPath(false);
+                nodes[col, row].SetParent(null);
+                nodes[col, row].SetChild(null);
+            }
+        }
+    }
+
     public Node GetNodeByPosition(Vector3 pos)
     {
         nodeOrigin = nodes[0, 0];

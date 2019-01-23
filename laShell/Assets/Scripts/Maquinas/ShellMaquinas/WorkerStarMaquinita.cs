@@ -104,6 +104,11 @@ public class WorkerStarMaquinita : MonoBehaviour {
                 break;
             case (int)States.Idle:
                 //Debug.Log("Idling");
+                goingToMine.ClearAnything();
+                goingToWarehouse.ClearAnything();
+                thePathMine.Clear();
+                thePathWarehouse.Clear();
+                nodes.ResetAllNodes();
                 thePathMine = goingToMine.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(mine.transform.position));
                 thePathWarehouse = goingToWarehouse.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(warehouse.transform.position));
                 break;
@@ -132,7 +137,8 @@ public class WorkerStarMaquinita : MonoBehaviour {
             id = 0;
             Debug.Log("estoy aqui");
             goingToMine.ClearAnything();
-             goingToWarehouse.ClearAnything();
+            goingToWarehouse.ClearAnything();
+            nodes.ResetAllNodes();
             // pathfinderStar.ClearAnything();
             thePathMine.Clear();
             thePathWarehouse.Clear();
@@ -169,6 +175,7 @@ public class WorkerStarMaquinita : MonoBehaviour {
             //destiny = Vector3.zero;
             goingToMine.ClearAnything();
             goingToWarehouse.ClearAnything();
+            nodes.ResetAllNodes();
             // pathfinderStar.ClearAnything();
             thePathWarehouse.Clear();
             thePathMine.Clear();
@@ -205,6 +212,7 @@ public class WorkerStarMaquinita : MonoBehaviour {
             //destiny = Vector3.zero;
             goingToMine.ClearAnything();
             goingToWarehouse.ClearAnything();
+            nodes.ResetAllNodes();
             thePathWarehouse.Clear();
             thePathMine.Clear();
             thePathWarehouse = goingToWarehouse.GetPath(nodes.GetNodeByPosition(transform.position), nodes.GetNodeByPosition(warehouse.transform.position));

@@ -16,7 +16,8 @@ public class PathfinderStarToWarehouse : MonoBehaviour
         selectedDestiny = destiny;
         destiny.SetDestiny(true);
         OpenNode(origin, null);
-        Debug.Log("WOpen: " + openNodes.Count);
+        // Debug.Log("WOpen: " + openNodes.Count);
+        // Debug.Log("OWarehouse: " + origin.transform.position);
         while (openNodes.Count > 0)
         {
             // Debug.Log("WSelectingNode");
@@ -63,6 +64,10 @@ public class PathfinderStarToWarehouse : MonoBehaviour
             for (int i = 0; i < openNodes.Count; i++)
             {
                 openNodes[i].SetOpen(false);
+                if (openNodes[i].GetChild() != null)
+                {
+                    openNodes[i].SetChild(null);
+                }
             }
         }
         if (closedNodes.Count > 0)
@@ -70,6 +75,10 @@ public class PathfinderStarToWarehouse : MonoBehaviour
             for (int i = 0; i < closedNodes.Count; i++)
             {
                 closedNodes[i].SetClosed(false);
+                if (closedNodes[i].GetChild() != null)
+                {
+                    closedNodes[i].SetChild(null);
+                }
             }
         }
         path.Clear();
