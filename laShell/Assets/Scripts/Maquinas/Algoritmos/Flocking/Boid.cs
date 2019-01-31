@@ -6,44 +6,65 @@ public class Boid : MonoBehaviour
 {
     Transform thisBoidPosition;
     List<Boid> boidsISee;
-    Vector3 positionPromediate;
+    // Vector3 positionPromediate;
     Vector3 cohesive; // Center
     Vector3 separate; // Avoid
-    Vector3 aligning;
-    [SerializeField]
+    Vector3 aligning; // Direction
+   /* [SerializeField]
     int weightCohesive;
     [SerializeField]
     int weightSeparate;
     [SerializeField]
-    int weightAligning;
-    Vector3 resultant;
+    int weightAligning;*/
+    // Vector3 resultant;
     // Tutorial
     public float boidSpeed = 0.001f;
     float boidRotationSpeed;
     float neighbourDistance;
+    bool turning;
 
 	void Start ()
     {
         cohesive = Vector3.zero;
         separate = Vector3.zero;
         aligning = Vector3.zero;
-        resultant = Vector3.zero;
-        positionPromediate = Vector3.zero;
+        //resultant = Vector3.zero;
+        // positionPromediate = Vector3.zero;
         boidsISee = new List<Boid>();
         thisBoidPosition = GetComponent<Transform>();
         boidRotationSpeed = 4.0f;
-        neighbourDistance = 3.0f;
-        boidSpeed = Random.Range(0.5f, 1);
+        neighbourDistance = 5.0f;
+        boidSpeed = Random.Range(1, 2);
+        turning = false;
 	}
 
 	void Update ()
     {
-        if (Random.Range(0, 5) < 1)
+        if (Vector3.Distance(transform.position, Vector3.zero) >= TheFlock.spaceSize)
         {
-            ApplyTheRules();
+            turning = true;
+        }
+        else
+        {
+            turning = false;
+        }
+        if (turning == true)
+        {
+            aligning = Vector3.zero - transform.position;
+            transform.rotation = Quaternion.Slerp(transform.rotation,
+                                                  Quaternion.LookRotation(aligning),
+                                                  boidRotationSpeed * Time.deltaTime);
+            boidSpeed = Random.Range(1, 2);
+        }
+        else
+        {
+            if (Random.Range(0, 5) < 1)
+            {
+                ApplyTheRules();
+            }
         }
         thisBoidPosition.Translate(0, 0, Time.deltaTime * boidSpeed);
-	}
+    }
 
     void ApplyTheRules()
     {
@@ -52,8 +73,8 @@ public class Boid : MonoBehaviour
         cohesive = Vector3.zero;
         separate = Vector3.zero;
         aligning = Vector3.zero;
-        resultant = Vector3.zero;
-        positionPromediate = Vector3.zero;
+        // resultant = Vector3.zero;
+        // positionPromediate = Vector3.zero;
         float gSpeed = 0.1f;
         Vector3 goalPos = TheFlock.goalPos;
         float distancing;
@@ -63,11 +84,11 @@ public class Boid : MonoBehaviour
             if (go != this.gameObject)
             {
                 distancing = Vector3.Distance(go.transform.position, this.transform.position);
-                if (distancing <= neighbourDistance)
+                if (distancing >= neighbourDistance)
                 {
                     cohesive += go.transform.position;
                     groupSize++;
-                    if (distancing < 1.0f)
+                    if (distancing < 2.0f)
                     {
                         separate = separate + (this.transform.position - go.transform.position);
                     }
