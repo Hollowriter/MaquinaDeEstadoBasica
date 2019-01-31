@@ -9,6 +9,7 @@ public class TheFlock : MonoBehaviour
     static int numberOfBoids;
     public static int spaceSize;
     public static GameObject[] theBoids;
+    public static Vector3 goalPos;
 
 	void Start ()
     {
@@ -26,6 +27,11 @@ public class TheFlock : MonoBehaviour
 	
 	void Update ()
     {
-		
+        if (Random.Range(0, 10000) < 50)
+        {
+            goalPos = new Vector3(Random.Range(-spaceSize, spaceSize),
+                                  Random.Range(-spaceSize, spaceSize),
+                                  Random.Range(-spaceSize, spaceSize));
+        }
 	}
 }
