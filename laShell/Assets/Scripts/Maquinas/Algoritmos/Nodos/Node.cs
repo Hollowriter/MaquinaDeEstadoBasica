@@ -15,8 +15,41 @@ public class Node : MonoBehaviour {
     bool isClosed = false;
     bool isDestiny = false;
     bool isPath = false;
+    bool isBlocked = false;
     Node theParent = null;
     Node theChild = null;
+    Ray leftRay;
+    Ray rightRay;
+    Ray frontRay;
+    Ray backRay;
+    RaycastHit hit;
+
+    void Start()
+    {
+        leftRay = new Ray(this.gameObject.transform.position, Vector3.left);
+        rightRay = new Ray(this.gameObject.transform.position, Vector3.right);
+        frontRay = new Ray(this.gameObject.transform.position, Vector3.forward);
+        backRay = new Ray(this.gameObject.transform.position, Vector3.back);
+    }
+
+    void Update()
+    {
+        if (Physics.Raycast(leftRay, out hit, 0.30f) ||
+            Physics.Raycast(rightRay, out hit, 0.30f) ||
+            Physics.Raycast(frontRay, out hit, 0.30f) ||
+            Physics.Raycast(backRay, out hit, 0.30f))
+        {
+            if (hit.collider.tag == "block")
+            {
+                Debug.Log("enters");
+                isBlocked = true;
+            }
+        }
+        else
+        {
+            isBlocked = false;
+        }
+    }
 
     public void AddAdjacent(Node n)
     {
@@ -58,6 +91,11 @@ public class Node : MonoBehaviour {
     public void SetDestiny(bool destiny)
     {
         isDestiny = destiny;
+    }
+
+    public void SetIsBlocked(bool blocking)
+    {
+        isBlocked = blocking;
     }
 
     public void SetParent(Node parent)
@@ -146,6 +184,11 @@ public class Node : MonoBehaviour {
     public bool GetDestiny()
     {
         return isDestiny;
+    }
+
+    public bool GetIsBlocked()
+    {
+        return isBlocked;
     }
 
     public bool GetAsPath() 

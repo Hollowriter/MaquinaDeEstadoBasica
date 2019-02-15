@@ -92,7 +92,7 @@ public class PathfinderStarToMine : MonoBehaviour
     {
         // Debug.Log("Open: " + n.GetOpen());
         // Debug.Log("Closed: " + n.GetClosed());
-        if (!n.GetOpen() && !n.GetClosed())
+        if (!n.GetOpen() && !n.GetClosed() && !n.GetIsBlocked())
         {
            // Debug.Log("MineNodeOpen");
             if (parent != null)
@@ -106,7 +106,7 @@ public class PathfinderStarToMine : MonoBehaviour
 
     public void CloseNode(Node n)
     {
-        if (!n.GetClosed() && n.GetOpen())
+        if (!n.GetClosed() && n.GetOpen() && !n.GetIsBlocked())
         {
             n.SetClosed(true);
             openNodes.Remove(n);
@@ -142,7 +142,7 @@ public class PathfinderStarToMine : MonoBehaviour
 
     public void CallForParents(Node n)
     {
-        if (n.GetParent())
+        if (n.GetParent() && !n.GetParent().GetIsBlocked())
         {
             n.GetParent().SetAsPath(true);
             CallForParents(n.GetParent());

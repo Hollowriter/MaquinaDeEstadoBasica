@@ -89,7 +89,7 @@ public class PathfinderStarToWarehouse : MonoBehaviour
 
     public void OpenNode(Node n, Node parent)
     {
-        if (!n.GetOpen() && !n.GetClosed())
+        if (!n.GetOpen() && !n.GetClosed() && !n.GetIsBlocked())
         {
             if (parent != null)
             {
@@ -102,7 +102,7 @@ public class PathfinderStarToWarehouse : MonoBehaviour
 
     public void CloseNode(Node n)
     {
-        if (!n.GetClosed() && n.GetOpen())
+        if (!n.GetClosed() && n.GetOpen() && !n.GetIsBlocked())
         {
             n.SetClosed(true);
             openNodes.Remove(n);
@@ -135,7 +135,7 @@ public class PathfinderStarToWarehouse : MonoBehaviour
 
     public void CallForParents(Node n)
     {
-        if (n.GetParent())
+        if (n.GetParent() && !n.GetParent().GetIsBlocked())
         {
             n.GetParent().SetAsPath(true);
             CallForParents(n.GetParent());

@@ -23,7 +23,7 @@ public class NodeCreator : MonoBehaviour
             {
                 GameObject go = new GameObject("Nodo");
                 nodes[col, row] = go.AddComponent<Node>();
-                go.transform.position = new Vector3(col * 2.0f, 0.0f, row * 2.0f);
+                go.transform.position = new Vector3(col * 3.0f, 0.0f, row * 3.0f);
             }
         }
 
@@ -68,6 +68,7 @@ public class NodeCreator : MonoBehaviour
                 nodes[col, row].SetClosed(false);
                 nodes[col, row].SetDestiny(false);
                 nodes[col, row].SetAsPath(false);
+                // nodes[col, row].SetIsBlocked(false);
                 nodes[col, row].SetParent(null);
                 nodes[col, row].SetChild(null);
             }
