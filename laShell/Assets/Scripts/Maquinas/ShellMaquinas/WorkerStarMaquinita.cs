@@ -91,15 +91,18 @@ public class WorkerStarMaquinita : MonoBehaviour {
         {
             case (int)States.ToMine:
                 ToMine();
+                nodes.ResetAllNodes();
                /*Debug.Log("asd");
                 movingToMine = true;*/
                 break;
             case (int)States.ToDeposit:
                 ToDeposit();
+                nodes.ResetAllNodes();
                 // movingToMine = false;
                 break;
             case (int)States.Mining:
                 Mining();
+                nodes.ResetAllNodes();
                 // movingToMine = true;
                 break;
             case (int)States.Idle:

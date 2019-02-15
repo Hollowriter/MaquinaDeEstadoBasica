@@ -34,10 +34,10 @@ public class Node : MonoBehaviour {
 
     void Update()
     {
-        if (Physics.Raycast(leftRay, out hit, 0.30f) ||
-            Physics.Raycast(rightRay, out hit, 0.30f) ||
-            Physics.Raycast(frontRay, out hit, 0.30f) ||
-            Physics.Raycast(backRay, out hit, 0.30f))
+        if (Physics.Raycast(leftRay, out hit, 0.15f) ||
+            Physics.Raycast(rightRay, out hit, 0.15f) ||
+            Physics.Raycast(frontRay, out hit, 0.15f) ||
+            Physics.Raycast(backRay, out hit, 0.15f))
         {
             if (hit.collider.tag == "block")
             {
