@@ -29,7 +29,7 @@ public class LunarLanderBase : MonoBehaviour
 	protected float[] inputs;
 
 	public State state = State.Flying;
-
+    public float score;
 	public void SetBrain(Genome genome, NeuralNetwork brain)
     {
         this.genome = genome;
@@ -145,7 +145,11 @@ public class LunarLanderBase : MonoBehaviour
 	{
 		speed.y += acceleration * dt  *  force;
 	}
-
+    //Para ver el puntaje individual
+    public void setScore(float _fit)
+    {
+        score = _fit;
+    }
 	public float Fitness
 	{
 		get { return genome.fitness; }
