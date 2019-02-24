@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LunarLander : LunarLanderBase
 {
+    Vector3 PreviousFrameVector = new Vector3(9000, 9000, 0);
     bool crashedWall = false;
     bool crashedLand = false;
     bool landed = false;
@@ -11,25 +12,32 @@ public class LunarLander : LunarLanderBase
     protected override void OnThink(float dt)
     {
         Vector3 distanceToPlatform = platform.transform.position - this.transform.position;
+        // Vector3 distanceToPlatformNormalized = platform.transform.position - this.transform.position;
         float platformPositionX = platform.transform.position.x;
         float platformPositionY = platform.transform.position.y;
-        float myDistanceX = platformPositionX - this.transform.position.x;
-        float myDistanceY = platformPositionY - this.transform.position.y;
+        //float myDistanceX = platformPositionX - this.transform.position.x;
+        // float myDistanceY = platformPositionY - this.transform.position.y;
 
-        if (myDistanceX < 0)
+        /*if (myDistanceX < 0)
             myDistanceX *= -1;
         if (myDistanceY < 0)
-            myDistanceY *= -1;
+            myDistanceY *= -1;*/
 
         Vector3 lunarSpeed = speed;
         distanceToPlatform.Normalize();
         lunarSpeed.Normalize();
         inputs[0] = lunarSpeed.x;
         inputs[1] = lunarSpeed.y;
+        inputs[2] = distanceToPlatform.x;
+        inputs[3] = distanceToPlatform.y;
         float[] outputs = brain.Synapsis(inputs);
         ThrottleLeft(dt, outputs[0]);
         ThrottleRight(dt, outputs[1]);
         ThrottleUp(dt, outputs[2]);
+        /*if (distanceToPlatform.magnitude < PreviousFrameVector.magnitude)
+        {
+            Fitness *= 2;
+        }*/
         /* if (distanceToPlatform.x < 0 && !crashedWall)
          {
              distanceToPlatform.x *= -1;
@@ -40,7 +48,7 @@ public class LunarLander : LunarLanderBase
          }*/
         float scoreX = 0;
         float scoreY = 0;
-        float scoreSpeedX = 1;
+        // float scoreSpeedX = 1;
         float scoreSpeedY = 1;
        /* if (lunarSpeed.x < 0 && !crashedWall)
         {
@@ -66,26 +74,18 @@ public class LunarLander : LunarLanderBase
         }*/
         if (lunarSpeed.y < 0)
         {
-
-            if ((lunarSpeed.y * -1) < 0.5f && !crashedWall)
+            if (lunarSpeed.y > -0.3f && !crashedWall)
             {
-                scoreSpeedY = 5;
+                scoreSpeedY = 20;
+                // Debug.Log("enters");
             }
             else
             {
-                scoreSpeedY = 2;
+                scoreSpeedY = 1;
             }
         }
         else
         {
-            /*if (lunarSpeed.y < 0.5f && !crashedWall)
-            {
-                scoreSpeedY = 5;
-            }
-            else
-            {
-                scoreSpeedY = 2;
-            }*/
             scoreSpeedY = 0;
         }
         /*
@@ -132,37 +132,30 @@ public class LunarLander : LunarLanderBase
                 }
             }
         }*/
-        /* if(myDistanceX > 30)
+        /*if (myDistanceX < 1 && !crashedWall)
          {
-             Fitness /= 2;
-         }
-         */
-        // if (myDistanceX > 10)
-        //{
-        //  scoreX /= myDistanceX;
-        //}
-        /*else*/ /*if (myDistanceX < 10)*/
-                 /*scoreX*/ /*+*//*= 5*/ /*100/(myDistanceX+1)*//*;*/
-        if (myDistanceX < 1 && !crashedWall)
+             scoreX = 2;
+             if (myDistanceX < 0.8)
+             {
+                 scoreX = 5;
+             }
+             if (myDistanceX < 0.4)
+             {
+                 scoreX = 10;
+             }
+             if (myDistanceX < 0.2)
+             {
+                 scoreX = 20;
+             }
+             if (myDistanceX == 0)
+             {
+                 scoreX = 40;
+             }
+         }*/
+        /*if (!crashedWall)
         {
-            scoreX = 2;
-            if (myDistanceX < 0.8)
-            {
-                scoreX = 5;
-            }
-            if (myDistanceX < 0.4)
-            {
-                scoreX = 10;
-            }
-            if (myDistanceX < 0.2)
-            {
-                scoreX = 20;
-            }
-            if (myDistanceX == 0)
-            {
-                scoreX = 40;
-            }
-        }
+        
+        }*/
 
         //if (myDistanceY > 10)
         //  scoreY /= myDistanceY;
@@ -171,34 +164,61 @@ public class LunarLander : LunarLanderBase
 
         //else if (myDistanceY < 10)
         //Fitness *= 10;
-
-        if (distanceToPlatform.y < 1 && !crashedWall)
+        if (distanceToPlatform.x < 0)
         {
-            scoreY = 2 /** scoreSpeedY*/;
-            if (distanceToPlatform.y < 0.8)
+            if (lunarSpeed.x > 0)
             {
-                scoreY = 4 /** scoreSpeedY*/;
+                scoreX = 20;
             }
-            if (distanceToPlatform.y < 0.4)
+            else
             {
-                scoreY = 8 /** scoreSpeedY*/;
+                scoreX = 0;
             }
-            if (distanceToPlatform.y < 0.2)
+        }
+        else if (distanceToPlatform.x > 0)
+        {
+            if (lunarSpeed.x < 0)
             {
-                scoreY = 16 /** scoreSpeedY*/;
+                scoreX = 20;
+            }
+            else
+            {
+                scoreX = 0;
+            }
+        }
+        else if (distanceToPlatform.x == 0)
+        {
+            scoreX = 50;
+        }
+        if ((distanceToPlatform.y * -1) < 1 && !crashedWall)
+        {
+            scoreY = 2 * scoreSpeedY;
+            if ((distanceToPlatform.y * -1) < 0.8)
+            {
+                scoreY = 4 * scoreSpeedY;
+            }
+            if ((distanceToPlatform.y * -1) < 0.4)
+            {
+                scoreY = 8 * scoreSpeedY;
+            }
+            if ((distanceToPlatform.y * -1) < 0.2)
+            {
+                scoreY = 16 * scoreSpeedY;
+                // Debug.Log("here");
             }
             if (distanceToPlatform.y == 0)
             {
-                scoreY = 32 /** scoreSpeedY*/;
+                scoreY = 32 * scoreSpeedY;
+                Debug.Log("enters");
             }
         }
-        scoreY += scoreSpeedY;
+        //scoreY += scoreSpeedY;
         
             // Debug.Log("scX " + scoreX);
             //Debug.Log("scY " + scoreY);
 
 
-            //if (!crashedWall)
+            if (!crashedWall && !crashedLand)
                 Fitness += 1 + scoreX + scoreY;
 
             if (landed)
@@ -221,12 +241,13 @@ public class LunarLander : LunarLanderBase
         crashedLand = false;
         landed = false;
         floor = false;
+        PreviousFrameVector = new Vector3(9000, 9000, 0);
         Debug.Log("RESET");
     }
     void CrashedWithWall()
     {
         if (crashedWall)
-            Fitness /= 200;
+            Fitness /= 20;
     }
     void CrashedWithFloor()
     {

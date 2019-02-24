@@ -945,9 +945,9 @@ MonoBehaviour:
   IterationCount: 8
   EliteCount: 4
   MutationChance: 0.2
-  MutationRate: 0.01
+  MutationRate: 0.05
   InputsCount: 4
-  HiddenLayers: 4
+  HiddenLayers: 6
   OutputsCount: 3
   NeuronsCountPerHL: 8
   Bias: 1
