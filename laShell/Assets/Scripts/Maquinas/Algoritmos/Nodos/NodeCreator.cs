@@ -23,7 +23,7 @@ public class NodeCreator : MonoBehaviour
             {
                 GameObject go = new GameObject("Nodo");
                 nodes[col, row] = go.AddComponent<Node>();
-                go.transform.position = new Vector3(col * 3.0f, 0.0f, row * 3.0f);
+                go.transform.position = new Vector3(col * 2.0f, 0.0f, row * 2.0f);
             }
         }
 
