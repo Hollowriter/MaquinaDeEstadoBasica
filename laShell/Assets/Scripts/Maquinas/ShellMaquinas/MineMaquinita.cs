@@ -21,7 +21,7 @@ public class MineMaquinita : MonoBehaviour {
     void Start ()
     {
         state = -1;
-        minerals = 200;
+        minerals = 20;
         maq.Init(2, 1);
         maq.SetRelation((int)States.Mineralized, (int)Events.Deplete, (int)States.Depleted);
 	}
